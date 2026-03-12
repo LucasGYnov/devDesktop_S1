@@ -251,7 +251,7 @@ ipcMain.handle('save-content', async (event, content) => {
     // Cela utilise l'API de notifications de l'OS (Centre de notifications Windows,
     // libnotify sur Linux, etc.)
     new Notification({
-      title: 'Terminé',           // Titre de la notification
+      title: 'Terminé',          // Titre de la notification
       body:  'Fichier sauvegardé.' // Corps du message
     }).show(); // .show() déclenche l'affichage immédiat
   }
@@ -286,20 +286,35 @@ app.whenReady().then(() => {
 });
 
 
+// ─── 11. CRÉER UN NOUVEAU FICHIER ───────────────────────────
+// Fonction asynchrone (async) appelée soit par le menu, soit par le renderer via IPC.
+async function newFileDialog() {
+  const content = ''; // Nouveau fichier = contenu vide
 
-// ─── 11. FONCTION DE  CREATION FICHIER ─────────────────────
-ipcMain.handle('new-file-dialog', async (event, content) => {
-  // Affiche la boîte de dialogue "Enregistrer sous" native de l'OS
-  const result = await dialog.showSaveDialog({ defaultPath: 'doc.txt' });
+  // Affiche la boîte de dialogue "Enregistrer sous"
+  const result = await dialog.showSaveDialog({ defaultPath: 'nouveau.txt' });
+
   if (!result.canceled) {
-    // Écrit le contenu dans le fichier choisi par l'utilisateur
-    fs.writeFileSync(result.filePath, content);
+    // Écrit le contenu vide dans le fichier choisi par l'utilisateur
+    fs.writeFileSync(result.filePath, content); 
+
     // Affiche une notification système native
     new Notification({
-      title: 'Terminé',
-      body:  'Fichier créé et sauvegardé.'
+      title: 'Nouveau fichier',
+      body:  'Fichier créé avec succès.'
     }).show();
-    return result.filePath; // Retourné au renderer
+
+    // Optionnel mais très recommandé : on envoie le contenu vide au renderer
+    // pour qu'il efface l'éditeur de texte de l'application
+    if (mainWindow) {
+        mainWindow.webContents.send('file-opened', { content, filePath: result.filePath });
+    }
+
+    return result.filePath; // Retourné au renderer si appelé via IPC
   }
+
   return null; // L'utilisateur a annulé → on retourne null
-});
+}
+
+// Enregistre un gestionnaire IPC pour répondre au renderer quand il appelle l'API "nouveau"
+ipcMain.handle('new-file-dialog', () => newFileDialog());

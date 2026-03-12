@@ -23,6 +23,8 @@
 const editor    = document.getElementById('editor');    // La zone de texte principale
 const filepath  = document.getElementById('filepath');  // L'affichage du chemin en haut
 const statusbar = document.getElementById('statusbar'); // La barre de statut en bas
+const compteur  = document.getElementById('compteur'); // Affiche le nombre de caractères
+
 
 
 // ─── 2. THÈME CLAIR / SOMBRE (electron-store) ───────────────
@@ -174,3 +176,10 @@ document.getElementById('btn-new')
     const chemin = await globalThis.api.nouveau();
   });
 
+
+
+// Change le compteur dans le text editor-area
+editor.addEventListener('input', () => {
+  const n = editor.value.length;
+  compteur.textContent = `${n} caractère${n > 1 ? 's' : ''}`;
+}); 
