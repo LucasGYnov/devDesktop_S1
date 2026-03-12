@@ -251,3 +251,9 @@ async function newFileDialog() {
 }
 
 ipcMain.handle('new-file-dialog', () => newFileDialog());
+
+
+
+store.set('preferences.theme', 'dark'); // Sauvegarder
+const theme = store.get('preferences.theme', 'light'); // Lire (+ valeur par défaut)
+store.delete('preferences.theme'); 
