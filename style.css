@@ -1,0 +1,94 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #1E2A3A;
+      color: #D4F1F4;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #152030;
+      padding: 16px 24px;
+      border-bottom: 2px solid #E67E22;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header h1 { font-size: 18px; color: #fff; }
+    header span { font-size: 12px; color: #888; }
+
+    .toolbar {
+      background: #243447;
+      padding: 10px 24px;
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid #2E3F52;
+    }
+
+    button {
+      background: #2E86AB;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #1A6A8A; }
+    button.danger { background: #C0392B; }
+    button.danger:hover { background: #922B21; }
+
+    .editor-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px;
+      gap: 10px;
+    }
+
+    #filepath {
+      font-size: 12px;
+      color: #E67E22;
+      font-style: italic;
+    }
+
+    #editor {
+      flex: 1;
+      background: #152030;
+      color: #A8FF78;
+      border: 1px solid #2E3F52;
+      border-radius: 6px;
+      padding: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      resize: none;
+      outline: none;
+      line-height: 1.6;
+    }
+
+    #editor:focus { border-color: #E67E22; }
+
+    .statusbar {
+      background: #152030;
+      padding: 6px 24px;
+      font-size: 11px;
+      color: #666;
+      border-top: 1px solid #2E3F52;
+    }
+
+    button.secondary { background: #5D6D7E; }
+    button.secondary:hover { background: #4A556A; }
+
+    /* ─── Thème clair ─────────────────────────────────────── */
+    body[data-theme="light"] { background: #F0F2F5; color: #222; }
+    body[data-theme="light"] header { background: #DDE1E7; border-color: #E67E22; }
+    body[data-theme="light"] header h1 { color: #222; }
+    body[data-theme="light"] .toolbar { background: #E8EAF0; border-color: #CCC; }
+    body[data-theme="light"] #editor { background: #FFF; color: #2C3E50; border-color: #CCC; }
+    body[data-theme="light"] .statusbar { background: #DDE1E7; color: #555; border-color: #CCC; }
