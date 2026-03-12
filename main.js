@@ -42,6 +42,7 @@ const fs    = require('node:fs');
 const Store = require('electron-store'); 
 
 
+
 // ─── 2. STOCKAGE LOCAL ──────────────────────────────────────
 const store = new Store();
 
@@ -163,6 +164,10 @@ async function openFileDialog() {
     mainWindow.webContents.send('file-opened', { content, filePath: currentFilePath });
     return currentFilePath; 
   }
+
+  const filePath = result.filePaths ? result.filePaths[0] : null;
+  const fileName = filePath ? path.basename(filePath) : 'Aucun fichier';
+  mainWindow.webContents.send('file-opened', { content: '', filePath: fileName });
 
   return null; 
 }
