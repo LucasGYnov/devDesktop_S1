@@ -152,13 +152,13 @@ function createMenu() {
 async function openFileDialog() {
 
   const result = await dialog.showOpenDialog({
-    filters: [{ name: 'Texte', extensions: ['txt'] }], // Seulement les .txt
+    filters: [{ name: 'Texte', extensions: ['txt'] }], // Seulement les extnesion txt
     properties: ['openFile'] 
   });
 
   if (!result.canceled) {
-    currentFilePath = result.filePaths[0]; // On mémorise le fichier courant
-    const content = fs.readFileSync(currentFilePath, 'utf-8');
+    currentFilePath = result.filePaths[0];
+    const content = fs.readFileSync(currentFilePath, 'utf-8'); // seul moyen que j'ai trouvé  pour le .txt
 
     mainWindow.webContents.send('file-opened', { content, filePath: currentFilePath });
     return currentFilePath; 
